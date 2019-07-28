@@ -1,5 +1,11 @@
 module.exports = {
-  extends: ['eslint:recommended', 'airbnb-base'],
+  extends: [
+    'eslint:recommended',
+    'airbnb-base',
+    'plugin:jest/recommended',
+  ],
+
+  plugins: ['jest'],
 
   rules: {
     'arrow-body-style': 'off',
