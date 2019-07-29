@@ -139,6 +139,16 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@fluent/bundle@^0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@fluent/bundle/-/bundle-0.13.0.tgz#9efe0d0cfee5de725be47013d32d1aa3bae63ea8"
+  integrity sha512-Q3XQSoeCvptsWXdu4H3pJZLp45FX8JnhQ7A9OV9w6dU+czKJnuKJkC5xLv19N0OG/NRnVFKqhcQBrx+IWAk09g==
+
+"@fluent/dedent@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@fluent/dedent/-/dedent-0.1.0.tgz#015eeba2610f7d8a26c23ce0aded9bc0f16215ee"
+  integrity sha512-n2AwAoXdU0WJ5LJgj1TFg+g9/LNtRXdYiv+xGbtDaQQsD5DWkb1KtG0SBQpQoq65yYbBYnPQG6ChezwS4UQYyw==
+
 "@jest/console@^24.7.1":
   version "24.7.1"
   resolved "https://registry.yarnpkg.com/@jest/console/-/console-24.7.1.tgz#32a9e42535a97aedfe037e725bd67e954b459545"
