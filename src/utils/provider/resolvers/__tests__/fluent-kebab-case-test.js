@@ -1,3 +1,4 @@
+const { ResolutionStatus } = require('../../const');
 const { isResolutionSkipped } = require('../../createProvider');
 const { transformToFluentKebabCase } = require('../fluent-kebab-case');
 
@@ -16,6 +17,7 @@ describe('transformToFluentKebabCase(req)', () => {
         const res = transformToFluentKebabCase({ key: 'mainPage' });
 
         expect(isResolutionSkipped(res)).toBe(false);
+        expect(res.status).toBe(ResolutionStatus.KEY_TRANSFORMED);
         expect(res.payload).toBe('main-page');
       });
     });
@@ -25,6 +27,7 @@ describe('transformToFluentKebabCase(req)', () => {
         const res = transformToFluentKebabCase({ key: 'MainPage' });
 
         expect(isResolutionSkipped(res)).toBe(false);
+        expect(res.status).toBe(ResolutionStatus.KEY_TRANSFORMED);
         expect(res.payload).toBe('_main-page');
       });
     });
@@ -34,6 +37,7 @@ describe('transformToFluentKebabCase(req)', () => {
         const res = transformToFluentKebabCase({ key: 'Main-page' });
 
         expect(isResolutionSkipped(res)).toBe(false);
+        expect(res.status).toBe(ResolutionStatus.KEY_TRANSFORMED);
         expect(res.payload).toBe('_main-page');
       });
     });
