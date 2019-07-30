@@ -12,6 +12,13 @@ function getMessageFromBundle(key, args, bundle) {
   return value;
 }
 
+function isResolutionSkipped(resolverResult) {
+  return (
+    !resolverResult ||
+    resolverResult.status === ResolutionStatus.SKIPPED
+  );
+}
+
 function createProvider(config) {
   return function getMessage(key, bundle, args) {
     if (bundle.hasMessage(key)) {
@@ -24,17 +31,12 @@ function createProvider(config) {
     for (const resolve of config.resolvers) {
       const res = resolve({ key: k, args }, { bundle });
 
-      if (!res) {
+      if (isResolutionSkipped(res)) {
         // eslint-disable-next-line no-continue
         continue;
       }
 
       switch (res.status) {
-        case ResolutionStatus.SKIPPED: {
-          // eslint-disable-next-line no-continue
-          continue;
-        }
-
         case ResolutionStatus.KEY_TRANSFORMED: {
           k = res.payload;
 
@@ -70,4 +72,5 @@ function createProvider(config) {
 
 module.exports = {
   createProvider,
+  isResolutionSkipped,
 };
