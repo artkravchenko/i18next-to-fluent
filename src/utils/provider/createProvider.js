@@ -1,9 +1,18 @@
 const { ResolutionStatus } = require('./const');
 
-function getMessageFromBundle(key, args, bundle) {
-  const message = bundle.getMessage(key);
+function getMessageFromBundle(req, args, bundle) {
+  const message = bundle.getMessage(req.key);
+
+  let patternToFormat;
+
+  if (req.attribute) {
+    patternToFormat = message.attrs[req.attribute];
+  } else {
+    patternToFormat = message;
+  }
+
   const errors = [];
-  const value = bundle.format(message, args, errors);
+  const value = bundle.format(patternToFormat, args, errors);
 
   if (errors.length) {
     throw new Error(errors[0]);
@@ -22,14 +31,16 @@ function isResolutionSkipped(resolverResult) {
 function createProvider(config) {
   return function getMessage(key, bundle, args) {
     if (bundle.hasMessage(key)) {
-      return getMessageFromBundle(key, args, bundle);
+      return getMessageFromBundle({ key, attritute: null }, args, bundle);
     }
 
     let k = key;
+    let attribute = null;
 
     // eslint-disable-next-line no-restricted-syntax
     for (const resolve of config.resolvers) {
-      const res = resolve({ key: k, args }, { bundle });
+      const req = { key: k, attribute, args };
+      const res = resolve(req, { bundle });
 
       if (isResolutionSkipped(res)) {
         // eslint-disable-next-line no-continue
@@ -38,10 +49,15 @@ function createProvider(config) {
 
       switch (res.status) {
         case ResolutionStatus.KEY_TRANSFORMED: {
-          k = res.payload;
+          if (typeof res.payload === 'string') {
+            k = res.payload;
+          } else {
+            k = res.payload.key;
+            attribute = res.payload.attribute;
+          }
 
           if (bundle.hasMessage(k)) {
-            return getMessageFromBundle(k, args, bundle);
+            return getMessageFromBundle({ key: k, attribute }, args, bundle);
           }
 
           // eslint-disable-next-line no-continue
