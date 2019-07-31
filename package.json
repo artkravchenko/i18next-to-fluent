@@ -1,8 +1,30 @@
 {
   "name": "i18next-to-fluent",
+  "description": "A solution simplifying migration from i18next to Fluent",
   "version": "0.1.0",
   "author": "Artem Kravchenko (artkravchenko.com)",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artkravchenko/i18next-to-fluent.git"
+  },
+  "keywords": [
+    "i18next",
+    "fluent",
+    "ftl",
+    "converter",
+    "adapter",
+    "migration",
+    "localization",
+    "l10n",
+    "internationalization",
+    "i18n",
+    "locale",
+    "language",
+    "translate",
+    "translation",
+    "react"
+  ],
   "scripts": {
     "test": "jest"
   },
