@@ -1,6 +1,7 @@
 const { FluentBundle } = require('@fluent/bundle');
 const ftl = require('@fluent/dedent');
 
+const { hasThrown } = require('../../../../resources/jest/expect');
 const { ResolutionStatus } = require('../const');
 const { createProvider } = require('../createProvider');
 
@@ -61,6 +62,8 @@ describe('createProvider(options)', () => {
 
         expect(firstCustomResolver).toHaveBeenCalled();
         expect(secondCustomResolver).toHaveBeenCalled();
+        expect(hasThrown(firstCustomResolver)).toBe(false);
+        expect(hasThrown(secondCustomResolver)).toBe(false);
       });
 
       it('should throw if key does not exist and there is no resolver', () => {
@@ -168,7 +171,7 @@ describe('createProvider(options)', () => {
 
           expect(skippingResolver).toHaveBeenCalled();
           expect(anotherResolver).toHaveBeenCalled();
-          expect.assertions(3);
+          expect(hasThrown(anotherResolver)).toBe(false);
         });
 
         it('should throw an error if there is no resolver remaining', () => {
@@ -273,6 +276,7 @@ describe('createProvider(options)', () => {
 
             expect(firstResolver).toHaveBeenCalled();
             expect(secondResolver).toHaveBeenCalled();
+            expect(hasThrown(secondResolver)).toBe(false);
           });
         });
 
