@@ -8,6 +8,10 @@ const { createProvider } = require('../createProvider');
 const GREETINGS_MESSAGE_KEY = 'greetings';
 const GREETINGS_MESSAGE_VALUE = 'Hello, world!';
 
+const ATTRIBUTE_TEST_MESSAGE_KEY = 'message-with-attribute';
+const ATTRIBUTE_TEST_ATTRIBUTE_KEY = 'attribute-name';
+const ATTRIBUTE_TEST_ATTRIBUTE_VALUE = 'Share!';
+
 function getBundle() {
   const bundle = new FluentBundle('en-US');
 
@@ -16,6 +20,9 @@ function getBundle() {
   // (the bag report is coming coon)
   const errors = bundle.addMessages(ftl`
   ${GREETINGS_MESSAGE_KEY} = ${GREETINGS_MESSAGE_VALUE}
+
+  ${ATTRIBUTE_TEST_MESSAGE_KEY} =
+    .${ATTRIBUTE_TEST_ATTRIBUTE_KEY} = ${ATTRIBUTE_TEST_ATTRIBUTE_VALUE}
   `);
 
   if (errors.length) {
@@ -210,73 +217,116 @@ describe('createProvider(options)', () => {
 
         // template literal to satisfy "jest/valid-describe" eslint rule
         describe(`${JSON.stringify(ResolutionStatus.KEY_TRANSFORMED)}`, () => {
-          it('should use returned key to resolve message value', () => {
-            const resolver = jest.fn(() => {
-              return {
-                status: ResolutionStatus.KEY_TRANSFORMED,
-                payload: GREETINGS_MESSAGE_KEY,
-              };
+          function runResolutionStatusKeyTransformedTests(options) {
+            it('should use returned key to resolve message value', () => {
+              const resolver = jest.fn(() => {
+                return {
+                  status: ResolutionStatus.KEY_TRANSFORMED,
+                  payload: options.effectiveTransformationPayload,
+                };
+              });
+
+              const getMessage = createProvider({
+                resolvers: [resolver],
+              });
+
+              const text = getMessage('non-existing-key', bundle);
+
+              expect(resolver).toHaveBeenCalled();
+              expect(text).toBe(options.messageValue);
             });
 
-            const getMessage = createProvider({
-              resolvers: [resolver],
+            it('should not call the following resolver if the key exists', () => {
+              const firstResolver = jest.fn(() => {
+                return {
+                  status: ResolutionStatus.KEY_TRANSFORMED,
+                  payload: options.effectiveTransformationPayload,
+                };
+              });
+
+              const secondResolver = jest.fn();
+
+              const getMessage = createProvider({
+                resolvers: [firstResolver, secondResolver],
+              });
+
+              try {
+                getMessage('non-existing-key', bundle);
+                // eslint-disable-next-line no-empty
+              } catch (e) {}
+
+              expect(firstResolver).toHaveBeenCalled();
+              expect(secondResolver).not.toHaveBeenCalled();
             });
 
-            const text = getMessage(`${GREETINGS_MESSAGE_KEY}123`, bundle);
+            it('should pass returned key to the following resolver', () => {
+              const firstResolver = jest.fn(() => {
+                return {
+                  status: ResolutionStatus.KEY_TRANSFORMED,
+                  payload: options.ineffectiveTransformationPayload,
+                };
+              });
 
-            expect(resolver).toHaveBeenCalled();
-            expect(text).toBe(GREETINGS_MESSAGE_VALUE);
-          });
+              const secondResolver = jest.fn((req) => {
+                if (typeof options.ineffectiveTransformationPayload === 'string') {
+                  expect(req.key).toBe(options.ineffectiveTransformationPayload);
+                } else {
+                  expect(req).toMatchObject(options.ineffectiveTransformationPayload);
+                }
+              });
 
-          it('should not call the following resolver if the key exists', () => {
-            const firstResolver = jest.fn(() => {
-              return {
-                status: ResolutionStatus.KEY_TRANSFORMED,
-                payload: GREETINGS_MESSAGE_KEY,
-              };
+              const getMessage = createProvider({
+                resolvers: [firstResolver, secondResolver],
+              });
+
+              try {
+                getMessage('non-existing-key', bundle);
+                // eslint-disable-next-line no-empty
+              } catch (e) {}
+
+              expect(firstResolver).toHaveBeenCalled();
+              expect(secondResolver).toHaveBeenCalled();
+              expect(hasThrown(secondResolver)).toBe(false);
+            });
+          }
+
+          describe('typeof payload', () => {
+            describe('"string"', () => {
+              describe('should treat payload as transformed key', () => {
+                runResolutionStatusKeyTransformedTests({
+                  effectiveTransformationPayload: GREETINGS_MESSAGE_KEY,
+                  ineffectiveTransformationPayload: 'missing-key',
+                  messageValue: GREETINGS_MESSAGE_VALUE,
+                });
+              });
             });
 
-            const secondResolver = jest.fn();
+            describe('"object"', () => {
+              describe('should treat .payload.key as transformed key', () => {
+                runResolutionStatusKeyTransformedTests({
+                  effectiveTransformationPayload: {
+                    key: GREETINGS_MESSAGE_KEY,
+                  },
+                  ineffectiveTransformationPayload: {
+                    key: 'missing-key',
+                  },
+                  messageValue: GREETINGS_MESSAGE_VALUE,
+                });
+              });
 
-            const getMessage = createProvider({
-              resolvers: [firstResolver, secondResolver],
+              describe('should treat .payload.attribute as transformed attribute', () => {
+                runResolutionStatusKeyTransformedTests({
+                  effectiveTransformationPayload: {
+                    key: ATTRIBUTE_TEST_MESSAGE_KEY,
+                    attribute: ATTRIBUTE_TEST_ATTRIBUTE_KEY,
+                  },
+                  ineffectiveTransformationPayload: {
+                    key: 'missing-key',
+                  },
+                  messageValue: ATTRIBUTE_TEST_ATTRIBUTE_VALUE,
+                });
+              });
             });
-
-            try {
-              getMessage(`${GREETINGS_MESSAGE_KEY}123`, bundle);
-              // eslint-disable-next-line no-empty
-            } catch (e) {}
-
-            expect(firstResolver).toHaveBeenCalled();
-            expect(secondResolver).not.toHaveBeenCalled();
-          });
-
-          it('should pass returned key to the following resolver', () => {
-            const FIRST_RESOLVER_TRANSFORMED_KEY = `_${GREETINGS_MESSAGE_KEY}`;
-
-            const firstResolver = jest.fn(() => {
-              return {
-                status: ResolutionStatus.KEY_TRANSFORMED,
-                payload: FIRST_RESOLVER_TRANSFORMED_KEY,
-              };
-            });
-
-            const secondResolver = jest.fn((req) => {
-              expect(req.key).toBe(FIRST_RESOLVER_TRANSFORMED_KEY);
-            });
-
-            const getMessage = createProvider({
-              resolvers: [firstResolver, secondResolver],
-            });
-
-            try {
-              getMessage(`${GREETINGS_MESSAGE_KEY}123`, bundle);
-              // eslint-disable-next-line no-empty
-            } catch (e) {}
-
-            expect(firstResolver).toHaveBeenCalled();
-            expect(secondResolver).toHaveBeenCalled();
-            expect(hasThrown(secondResolver)).toBe(false);
           });
         });
 
