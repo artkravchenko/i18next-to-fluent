@@ -8,6 +8,9 @@
     "type": "git",
     "url": "https://github.com/artkravchenko/i18next-to-fluent.git"
   },
+  "bin": {
+    "i18next-to-fluent": "./scripts/transform.js"
+  },
   "keywords": [
     "i18next",
     "fluent",
