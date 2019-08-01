@@ -32,12 +32,7 @@ function transformNesting(req, provider) {
 
   const msg = provider.bundle.getMessage(nextKey);
 
-  if (
-    typeof msg !== 'object' || // message without placeables and attributes
-    Array.isArray(msg) || // message with placeables but without attributes
-    !('attrs' in msg) || // FIXME: is it needed?
-    !(attribute in msg.attrs)
-  ) {
+  if (!('attributes' in msg) || !(attribute in msg.attributes)) {
     return null;
   }
 

@@ -1,4 +1,4 @@
-const { FluentBundle } = require('@fluent/bundle');
+const { FluentBundle, FluentResource } = require('@fluent/bundle');
 const ftl = require('@fluent/dedent');
 
 const { ResolutionStatus } = require('../../const');
@@ -11,7 +11,7 @@ function getBundle() {
   // the lack of indentation further is intentionnal - `ftl` surprisingly
   // loses the expressions expected to be interpolated
   // (the bag report is coming coon)
-  const errors = bundle.addMessages(ftl`
+  const resource = new FluentResource(ftl`
   message_test = Hello from the message!
 
   message_containing_attribute =
@@ -22,6 +22,8 @@ function getBundle() {
   message_over_attribute =
     .test = attribute value resolved!
   `);
+
+  const errors = bundle.addResource(resource);
 
   if (errors.length) {
     throw new Error(errors[0]);

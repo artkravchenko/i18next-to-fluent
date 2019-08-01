@@ -139,10 +139,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@fluent/bundle@^0.13.0":
-  version "0.13.0"
-  resolved "https://registry.yarnpkg.com/@fluent/bundle/-/bundle-0.13.0.tgz#9efe0d0cfee5de725be47013d32d1aa3bae63ea8"
-  integrity sha512-Q3XQSoeCvptsWXdu4H3pJZLp45FX8JnhQ7A9OV9w6dU+czKJnuKJkC5xLv19N0OG/NRnVFKqhcQBrx+IWAk09g==
+"@fluent/bundle@^0.14.0":
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/@fluent/bundle/-/bundle-0.14.0.tgz#b7ce7caf132966e4e40ed762f265c2b61f98eff2"
+  integrity sha512-ENcZYWq6Q5ut39n3hSQiL3seCTAajuPXIkpnPBeO4xcJFTUebNhKh5VpmwJngoS5lkRVYOzJGmupADzQy/ODYw==
 
 "@fluent/dedent@^0.1.0":
   version "0.1.0"

@@ -6,13 +6,13 @@ function getMessageFromBundle(req, args, bundle) {
   let patternToFormat;
 
   if (req.attribute) {
-    patternToFormat = message.attrs[req.attribute];
+    patternToFormat = message.attributes[req.attribute];
   } else {
-    patternToFormat = message;
+    patternToFormat = message.value;
   }
 
   const errors = [];
-  const value = bundle.format(patternToFormat, args, errors);
+  const value = bundle.formatPattern(patternToFormat, args, errors);
 
   if (errors.length) {
     throw new Error(errors[0]);

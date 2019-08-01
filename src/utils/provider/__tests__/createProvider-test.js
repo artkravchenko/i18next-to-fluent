@@ -1,4 +1,4 @@
-const { FluentBundle } = require('@fluent/bundle');
+const { FluentBundle, FluentResource } = require('@fluent/bundle');
 const ftl = require('@fluent/dedent');
 
 const { hasThrown } = require('../../../../resources/jest/expect');
@@ -18,12 +18,14 @@ function getBundle() {
   // the lack of indentation further is intentionnal - `ftl` surprisingly
   // loses the expressions expected to be interpolated
   // (the bag report is coming coon)
-  const errors = bundle.addMessages(ftl`
+  const resource = new FluentResource(ftl`
   ${GREETINGS_MESSAGE_KEY} = ${GREETINGS_MESSAGE_VALUE}
 
   ${ATTRIBUTE_TEST_MESSAGE_KEY} =
     .${ATTRIBUTE_TEST_ATTRIBUTE_KEY} = ${ATTRIBUTE_TEST_ATTRIBUTE_VALUE}
   `);
+
+  const errors = bundle.addResource(resource);
 
   if (errors.length) {
     throw new Error(errors[0]);
