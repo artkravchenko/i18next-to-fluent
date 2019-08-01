@@ -27,7 +27,9 @@
   ],
   "files": [],
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test-e2e": "cd fixtures/e2e && yarn && yarn test",
+    "test-all": "run-s \"test {@}\" \"test-e2e {@}\" --"
   },
   "dependencies": {
     "kebab-case": "^1.0.0"
@@ -39,6 +41,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-jest": "^22.14.0",
-    "jest": "^24.8.0"
+    "jest": "^24.8.0",
+    "npm-run-all": "^4.1.5"
   }
 }

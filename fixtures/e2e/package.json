@@ -1,0 +1,15 @@
+{
+  "name": "i18next-to-fluent-e2e-test-fixture",
+  "private": true,
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@fluent/bundle": "^0.14.0",
+    "i18next": "^17.0.7",
+    "i18next-node-fs-backend": "^2.1.3",
+    "i18next-to-fluent": "file:../..",
+    "jest": "^24.8.0",
+    "rimraf": "^2.6.3"
+  }
+}
