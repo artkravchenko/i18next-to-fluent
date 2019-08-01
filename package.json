@@ -28,7 +28,11 @@
     "translation",
     "react"
   ],
-  "files": [],
+  "files": [
+    "scripts/*",
+    "src/*",
+    "!__tests__"
+  ],
   "scripts": {
     "test": "jest",
     "test-e2e": "cd fixtures/e2e && yarn && yarn test",
