@@ -38,7 +38,7 @@ Wait a little bit until the full compatibility is provided. I'm personally inter
 
 If you'd like to show your support and point the development to specific edge cases or feature requests, consider reacting on issues with comments or just emoji. This way I will see what's the most expected for the community and focus on solving those issues first.
 
-## The main parts
+## Repository structure
 
 - **converter** from `.json` to `.ftl`.
 
