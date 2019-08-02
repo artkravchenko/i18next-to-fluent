@@ -33,7 +33,7 @@ Sharing [separation of concerns](https://en.wikipedia.org/wiki/Separation_of_con
 
 > _Read the comparison articles about [feature set](https://github.com/projectfluent/fluent/wiki/Fluent-and-ICU-MessageFormat) and [syntax](https://github.com/projectfluent/fluent/wiki/MessageFormat-vs-Fluent-Syntax) between Fluent and ICU MessageFormat._
 
-At the time I started a migration of one of my projects, it turned out that it would not be easy to say the least. One of the issues was the fact that `i18next`'s nested trees of phrases were simply incompatible with Fluent which supported no more than 1 level of nesting (attributes of messages).
+At the time I started a migration of one of my projects, it turned out that it would not be easy to say the least. One of the issues was the fact that `i18next`'s nested trees of phrases were simply incompatible with Fluent which supported no more than 1 level of object nesting (attributes of messages).
 
 Since it seemed like there was no tool providing complete compatibility layer on the wild, I decided to develop and to publish one by myself.
 
@@ -41,13 +41,13 @@ Since it seemed like there was no tool providing complete compatibility layer on
 
 - **converter** from `.json` to `.ftl`.
 
-It transforms full-featured (nesting, plurals, references and more) `i18next` localization resources to the Fluent compatible ones.
+It transforms full-featured (nested data structures, plurals, references and more) `i18next` localization resources to the Fluent compatible ones.
 
 - **client-side adapter** to provide compatibility layer between your `i18next`-oriented code and Fluent API. It's the right time to remove `i18next` related packages from the list of dependencies.
 
 It basically resolves your old paths to the new ones and allows you to use good old `t('mainPage.header.title')`.
 
-This way it saves you from making lots of code changes since paths to messages will be different. It'll most likely happen if you have previously used nesting heavily (Fluent does not actually support deep nesting at the moment).
+This way it saves you from making lots of code changes since paths to messages will be different. It'll most likely happen if you have previously used nested objects and arrays heavily (Fluent does not actually support deeply nested data structures at the moment).
 
 - **React bindings** to provide resolving adapter to your components.
 
