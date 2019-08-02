@@ -7,6 +7,8 @@ Common use cases:
 - convertion from `i18next`'s full-featured `.json` resources to `.ftl`
 - getting rid of `i18next` dependency without rewriting a bunch of code
 
+> **Warning:** the package is unstable right now. Although it can fit your needs, its production usage is discouraged. See [**Notice**](#notice) and [**Development roadmap**](#development-roadmap) sections for details.
+
 ## Motivation behind the project
 
 In today's world of high customization, massive A/B testing, and quickly changing requirements, it is preferable to speed up release cycle all the time.
@@ -35,16 +37,6 @@ At the time I started a migration of one of my projects, it turned out that it w
 
 Since it seemed like there was no tool providing complete compatibility layer on the wild, I decided to develop and to publish one by myself.
 
-## Notice
-
-The project is under development right now. There's a number of unsolved issues as well as the lack of documentation. API also may change at any time.
-
-Wait a little bit until the full compatibility is provided. I'm personally interested to stabilize the solution as quickly as possible to set up the migration of commercial projects e.g. [fish.travel](https://fish.travel). Stay tuned!
-
-If you'd like to show your support and point the development to specific edge cases or feature requests, consider reacting on issues with comments or just emoji. This way I will see what's the most expected for the community and focus on solving those issues first.
-
-See [**Development roadmap**](#development-roadmap) section for status of what's implemented.
-
 ## Repository structure
 
 - **converter** from `.json` to `.ftl`.
@@ -60,6 +52,16 @@ This way it saves you from making lots of code changes since paths to messages w
 - **React bindings** to provide resolving adapter to your components.
 
 - **instructions** about how to set up localization pipeline effectively from scratch: from the workspace for translators to the performant loading of resources at the client side.
+
+## Notice
+
+The project is under development right now. There's a number of unsolved issues as well as the lack of documentation. API also may change at any time.
+
+Wait a little bit until the full compatibility is provided. I'm personally interested to stabilize the solution as quickly as possible to set up the migration of commercial projects e.g. [fish.travel](https://fish.travel). Stay tuned!
+
+If you'd like to show your support and point the development to specific edge cases or feature requests, consider reacting on issues with comments or just emoji. This way I will see what's the most expected for the community and focus on solving those issues first.
+
+See [**Development roadmap**](#development-roadmap) section for status of what's implemented.
 
 ## Development roadmap
 
