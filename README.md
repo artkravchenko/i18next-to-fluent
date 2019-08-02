@@ -9,6 +9,12 @@ Common use cases:
 
 > **Warning:** the package is unstable right now. Although it can fit your needs, its production usage is discouraged. See [**Notice**](#notice) and [**Development roadmap**](#development-roadmap) sections for details.
 
+- [Motivation behind the project](#motivation-behind-the-project)
+- [Repository structure](#repository-structure)
+- [Notice](#notice)
+- [Development roadmap](#development-roadmap)
+- [License](#license)
+
 ## Motivation behind the project
 
 In today's world of high customization, massive A/B testing, and quickly changing requirements, it is preferable to speed up release cycle all the time.
