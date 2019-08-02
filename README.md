@@ -9,6 +9,8 @@ Common use cases:
 
 > **Warning:** the package is unstable right now. Although it can fit your needs, its production usage is discouraged. See [**Notice**](#notice) and [**Development roadmap**](#development-roadmap) sections for details.
 
+___
+
 - [Installation](#installation)
 - [Usage](#usage)
 - [Project structure](#project-structure)
