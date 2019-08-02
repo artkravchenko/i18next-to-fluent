@@ -43,6 +43,8 @@ Wait a little bit until the full compatibility is provided. I'm personally inter
 
 If you'd like to show your support and point the development to specific edge cases or feature requests, consider reacting on issues with comments or just emoji. This way I will see what's the most expected for the community and focus on solving those issues first.
 
+See [**Development roadmap**](#development-roadmap) section for status of what's implemented.
+
 ## Repository structure
 
 - **converter** from `.json` to `.ftl`.
@@ -58,6 +60,93 @@ This way it saves you from making lots of code changes since paths to messages w
 - **React bindings** to provide resolving adapter to your components.
 
 - **instructions** about how to set up localization pipeline effectively from scratch: from the workspace for translators to the performant loading of resources at the client side.
+
+## Development roadmap
+
+### `i18next` features
+
+- [ ] [Interpolation](https://www.i18next.com/translation-function/interpolation)
+
+  - [x] [Basic](https://www.i18next.com/translation-function/interpolation#basic) (`"Hello, {{name}}!"`)
+  - [ ] [Member expressions](https://www.i18next.com/translation-function/interpolation#working-with-data-models) (`"I am {{author.name}}"`)
+
+- [ ] [Objects and Arrays](https://www.i18next.com/translation-function/objects-and-arrays)
+
+  ```json
+  {
+    "tree": {
+      "res": "added {{something}}"
+    },
+    "array": ["a", "b", "c"]
+  }
+  ```
+
+  - [x] Resolution of paths to the phrases inside objects (`'tree.res'`)
+  - [ ] Resolution of paths to non-strings (`'tree'`, `'array'`)
+  - [ ] Resolution of arrays (`'array.0'`)
+
+- [ ] Plurals
+
+  - [ ] [Singular / Plural](https://www.i18next.com/translation-function/plurals#singular-plural)
+
+    - supported for `en`, `es` (i.e. locales with "one", "other" CLDR rules), and `ru` (i.e. locales with "one", "few", "other" CLDR rules) locales at the moment
+
+  - [ ] [Interval](https://www.i18next.com/translation-function/plurals#interval-plurals)
+
+- [ ] [Nesting](https://www.i18next.com/translation-function/nesting)
+
+  ```json
+  {
+    "nesting1": "1 $t(nesting2)",
+    "nesting2": "2 $t(nesting3)",
+    "nesting3": "3",
+  }
+  ```
+
+  ```js
+  i18next.t('nesting1'); // -> "1 2 3"
+  ```
+
+- [ ] [Context](https://www.i18next.com/translation-function/context)
+- [ ] [Namespaces](https://www.i18next.com/principles/namespaces)
+
+### Compatibility with Fluent
+
+- [x] Flatten deeply nested objects
+- [ ] Transfrom arrays
+- [ ] Transform `"-"` in the beginning of message/attribute key
+- [ ] Transform digits in the beginning of message/attribute key
+- [ ] Escape Fluent special characters inside message values (e.g. `"{"`)
+
+### Adapter between `i18next` oriented code and Fluent
+
+- [x] Resolvers API
+- [ ] Caching
+
+### React bindings
+
+- [ ] Legacy Context Provider
+- [ ] Official Context API Provider
+- [ ] Consumer
+- [ ] Hooks
+
+### Converters
+
+- [x] transformer of resources from `.json` to `.ftl`
+- [ ] transformer of imports from `react-i18next` to the adapter
+
+### Packaging
+
+- [ ] ES Modules
+
+### Instructions
+
+- [ ] Runnable demo that's available online (only end-to-end test is available now)
+- [ ] Converter API (tests are partially available now)
+- [ ] Adapters API (tests are available now)
+- [ ] React bindings API
+- [ ] Tutorial about how to load `.ftl` resource bundle on the server
+- [ ] Performance oriented tutorials and examples
 
 ## License
 
