@@ -2,6 +2,11 @@
 
 `i18next-to-fluent` is a solution simplifying the migration from [I18next](https://www.i18next.com) to [Fluent](http://projectfluent.org).
 
+Common use cases:
+
+- convertion from `i18next`'s full-featured `.json` resources to `.ftl`
+- getting rid of `i18next` dependency without rewriting a bunch of code
+
 ## Motivation behind the project
 
 In today's world of high customization, massive A/B testing, and quickly changing requirements, it is preferable to speed up release cycle all the time.
