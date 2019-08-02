@@ -1,4 +1,4 @@
-# `i18next-to-fluent`
+# i18next-to-fluent
 
 `i18next-to-fluent` is a solution simplifying the migration from [I18next](https://www.i18next.com) to [Fluent](http://projectfluent.org).
 
