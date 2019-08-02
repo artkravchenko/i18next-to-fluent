@@ -9,11 +9,39 @@ Common use cases:
 
 > **Warning:** the package is unstable right now. Although it can fit your needs, its production usage is discouraged. See [**Notice**](#notice) and [**Development roadmap**](#development-roadmap) sections for details.
 
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project structure](#project-structure)
 - [Motivation behind the project](#motivation-behind-the-project)
-- [Repository structure](#repository-structure)
 - [Notice](#notice)
 - [Development roadmap](#development-roadmap)
 - [License](#license)
+
+## Installation
+
+```
+npm install --save i18next-to-fluent
+```
+
+## Usage
+
+Simple as heck usage example has not been implemented yet. However, a basic end-to-end test already [exists](fixtures/e2e/__tests__/index.js) and passes.
+
+## Project structure
+
+- **converter** from `.json` to `.ftl`.
+
+It transforms full-featured (nested data structures, plurals, references and more) `i18next` localization resources to the Fluent compatible ones.
+
+- **client-side adapter** to provide compatibility layer between your `i18next`-oriented code and Fluent API. It's the right time to remove `i18next` related packages from the list of dependencies.
+
+It basically resolves your old paths to the new ones and allows you to use good old `t('mainPage.header.title')`.
+
+This way it saves you from making lots of code changes since paths to messages will be different. It'll most likely happen if you have previously used nested objects and arrays heavily (Fluent does not actually support deeply nested data structures at the moment).
+
+- **React bindings** to provide resolving adapter to your components.
+
+- **instructions** about how to set up localization pipeline effectively from scratch: from the workspace for translators to the performant loading of resources at the client side.
 
 ## Motivation behind the project
 
@@ -42,22 +70,6 @@ Sharing [separation of concerns](https://en.wikipedia.org/wiki/Separation_of_con
 At the time I started a migration of one of my projects, it turned out that it would not be easy to say the least. One of the issues was the fact that `i18next`'s nested trees of phrases were simply incompatible with Fluent which supported no more than 1 level of object nesting (attributes of messages).
 
 Since it seemed like there was no tool providing complete compatibility layer on the wild, I decided to develop and to publish one by myself.
-
-## Repository structure
-
-- **converter** from `.json` to `.ftl`.
-
-It transforms full-featured (nested data structures, plurals, references and more) `i18next` localization resources to the Fluent compatible ones.
-
-- **client-side adapter** to provide compatibility layer between your `i18next`-oriented code and Fluent API. It's the right time to remove `i18next` related packages from the list of dependencies.
-
-It basically resolves your old paths to the new ones and allows you to use good old `t('mainPage.header.title')`.
-
-This way it saves you from making lots of code changes since paths to messages will be different. It'll most likely happen if you have previously used nested objects and arrays heavily (Fluent does not actually support deeply nested data structures at the moment).
-
-- **React bindings** to provide resolving adapter to your components.
-
-- **instructions** about how to set up localization pipeline effectively from scratch: from the workspace for translators to the performant loading of resources at the client side.
 
 ## Notice
 
