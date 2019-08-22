@@ -4,7 +4,10 @@ const fs = require('fs');
 const path = require('path');
 const util = require('util');
 
+const fsAccessAsync = util.promisify(fs.access);
+// eslint-disable-next-line import/newline-after-import
 const execAsync = util.promisify(require('child_process').exec);
+const readFileAsync = util.promisify(fs.readFile);
 const rimrafAsync = util.promisify(require('rimraf'));
 
 const FIXTURE_ROOT_PATH = path.join(__dirname, '..');
@@ -30,7 +33,7 @@ const fluentResourcePaths = {
 // eslint-disable-next-line no-shadow
 function isExisting(path) {
   return new Promise((resolve) => {
-    fs.promises.access(path)
+    fsAccessAsync(path)
       .then(() => resolve(true))
       .catch(() => resolve(false));
   });
@@ -99,7 +102,7 @@ describe('End-to-end', () => {
         const { FluentBundle, FluentResource } = require('@fluent/bundle');
 
         const bundle = new FluentBundle(locale);
-        const text = await fs.promises.readFile(p);
+        const text = await readFileAsync(p);
         bundle.addResource(new FluentResource(text));
         bundles[locale] = bundle;
       }
